@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+  </head>
+
+  <body class="m-5" style="text-align: center">
+    <div
+      class="card p-5 shadow w-75 bg-success"
+      id="tell"
+      style="margin-left: 150px"
+    >
+      <h3>Welcome guys, do your best and leave.</h3>
+      <p id="IDname"></p>
+      <div id="preID">
+        <input
+          type="text"
+          id="examinerID"
+          placeholder="Input your first name..."
+          required
+          value=""
+        />
+        <button id="star" onclick="start()">Start Quiz</button>
+        <p id="red" class="text-danger"></p>
+      </div>
+    </div>
+
+    <div id="all">
+      <h1 class="card-header">Quiz</h1>
+      <div id="saw"></div>
+
+      <div id="timee"></div>
+
+      <div class="card">
+        <h1 id="ees"></h1>
+
+        <div class="card-body" id="see"></div>
+      </div>
+
+      <div id="clos" class="mt-3">
+        <button class="btn btn-success" id="lest" onclick="less()">Prev</button>
+        <button class="btn btn-primary" id="most" onclick="more()">Next</button>
+      </div>
+      <div class="mt-2 d-grid gap-2">
+        <button class="btn btn-info btn-lg" id="submit" onclick="correct()">
+          Submit
+        </button>
+      </div>
+      <button id="go" class="btn btn-primary" onclick="back()">Go Back</button>
+    </div>
+  </body>
+</html>
+<script>
+  //let call = document.getElementById("ees");
+
+  let questions = [
+    {
+      question: "How many days do we have in a week ?",
+      options: ["Five", "Seven", "Two", "Six"],
+      answer: "Seven",
+      chosen_ans: "",
+    },
+    {
+      question: "How many days are there in a normal year ?",
+      options: ["366", "365", "300", "367"],
+      answer: "365",
+      chosen_ans: "",
+    },
+    {
+      question: "Which animal is known as the 'Ship' of the Desert ?",
+      options: ["Chameleon", "Camel", "Kamel", "Dear"],
+      answer: "Camel",
+      chosen_ans: "",
+    },
+    {
+      question: "How many sides are there in a triangle ?",
+      options: ["Four", "Two", "Three", "Seven"],
+      answer: "Three",
+      chosen_ans: "",
+    },
+    {
+      question: "Which animal is called King of Jungle ?",
+      options: ["Lion", "Elephant", "Tiger", "Hyena"],
+      answer: "Lion",
+      chosen_ans: "",
+    },
+    {
+      question: "What do you call a house made of ice ?",
+      options: ["Ice castle", "Hut", "Igloo", "snow house"],
+      answer: "Igloo",
+      chosen_ans: "",
+    },
+    {
+      question: "What is the top color in a rainbow ?",
+      options: ["Yellow", "Red", "Blue", "Green"],
+      answer: "Red",
+      chosen_ans: "",
+    },
+    {
+      question: "What type of bird lays the largest eggs ?",
+      options: ["Eagle", "Vulture", "Sparrow", "Ostrich"],
+      answer: "Ostrich",
+      chosen_ans: "",
+    },
+    {
+      question: "How many bones does an adult human have ?",
+      options: ["200", "306", "206", "205"],
+      answer: "206",
+      chosen_ans: "",
+    },
+    {
+      question: "How many lungs does the human body have ?",
+      options: ["Four", "Three", "Two", "Six"],
+      answer: "Two",
+      chosen_ans: "",
+    },
+  ];
+
+  all.hidden = true;
+  go.hidden = true;
+  let see = document.getElementById("see");
+  let index = 0;
+  let f = questions.length;
+
+  function display() {
+    // see.innerHTML = ""
+    see.innerHTML = `<p>${index + 1} of ${f} </p>`;
+    see.innerHTML += `<h4>${questions[index].question}</h4>`;
+    // for (let i = 0; i < questions[index].options.length; i++) {
+    //     see.innerHTML += `<p><input type="radio" onclick="answer()">${questions[index].options[i]}</p>`
+    // }
+
+    questions[index].options.forEach(function (e, i) {
+      see.innerHTML += `<p><input type="radio" value='${e}' class="myans" name="aaa">${questions[index].options[i]}</p>`;
+      document.querySelectorAll(".myans").forEach(function (box) {
+        box.addEventListener("click", answer);
+        if (box.value == questions[index].chosen_ans) {
+          box.checked = true;
+        }
+      });
+    });
+    if (index == 0) {
+      lest.hidden = true
+    }
+    else{
+      lest.hidden = false
+    }
+
+    if (index == questions.length-1) {
+      most.hidden = true
+    }
+    else{
+      most.hidden = false
+    }
+  }
+
+  display();
+
+  //   function stop() {
+  //     let h = 10;
+  //     let terminate = setInterval(() => {
+  //       h--;
+  //       if (h == 0) {
+  //         clearInterval(terminate);
+  //         correct();
+  //       }
+  //       timee.innerHTML = `<h3>00:0${h} of 10 seconds</h3>`;
+  //     }, 1000);
+  //   }
+  //   stop();
+  let a;
+  function correct() {
+    timee.hidden = true;
+    IDname.hidden = true;
+    submit.hidden = true;
+    preID.hidden = false;
+    clos.hidden = true;
+    tell.hidden = true;
+    go.hidden = false;
+    let score = 0;
+    questions.forEach(function (el) {
+      if (el.answer == el.chosen_ans) {
+        score++;
+      }
+    });
+    // clos.innerHTML = "";
+    document.getElementById("see").innerHTML = `${a}, your score is ${
+      score + "/" + questions.length
+    }`;
+    // alert(score+"/"+questions.length)
+
+    // let a = questions.filter(function(params){
+    //     return params.answer==params.chosen_ans
+    // })
+    // clearInterval(demo);
+  }
+
+  function start() {
+    let asd = examinerID.value;
+    if (asd != "") {
+      preID.hidden = true;
+      all.hidden = false;
+      clos.hidden = false;
+      a = examinerID.value;
+      IDname.innerHTML = `<h2>Welcome,${a}</h2>`;
+      see.innerHTML = "";
+      index = 0;
+      let count = 30;
+      let demo = setInterval(function () {
+        count--;
+        document.getElementById(
+          "timee"
+        ).innerHTML = `<p style="text-align:right;">You have ${count}s left </p>`;
+        if (count == 0) {
+          correct();
+
+          clearInterval(demo);
+        }
+      }, 3000);
+      display();
+    } else {
+      //all.hidden = true;
+      red.innerHTML = "Put your name";
+    }
+  }
+
+  function answer(ans) {
+    questions[index].chosen_ans = ans.target.value;
+    if (ans.value == ans.checked) {
+      most.disabled = false;
+    }
+
+  }
+
+  // function more(){
+  //         index++
+
+  //     display()
+  // }
+  // function prev(){
+  //     index--
+  //     display()
+  // }
+  function more(params) {
+    if (questions[index + 1]) {
+      index++;
+
+      display();
+    }
+    // if (index.length - 1) {
+    //   most.disabled = true;
+    // }
+  }
+  function less() {
+    if (questions[index - 1]) {
+      index--;
+      display();
+    }
+
+    // if (index <= 0) {
+    //   lest.disabled = true;
+    // }
+  }
+  function back() {
+    tell.hidden = false;
+    go.hidden = true;
+    location.reload();
+  }
+</script>
